@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        Spring Boot 父项目依赖，统一管理 Spring Boot 相关依赖的版本。
+        版本 3.5.12 对应 Spring Framework 6.2.17，要求 JDK 17 或更高。
+    -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.12</version>
+        <relativePath/> <!-- 从 Maven 仓库查找父 POM，而不是本地相对路径 -->
+    </parent>
+
+    <!-- 项目坐标 -->
+    <groupId>com.nuc</groupId>
+    <artifactId>SpringBoot</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <!-- 项目描述信息（可选） -->
+    <name>01_SpringBoot_MybatisPlus</name>
+    <description>01_SpringBoot_MybatisPlus</description>
+
+    <!--
+        项目属性配置，可在此处统一管理版本号等。
+        java.version 指定编译目标 JDK 版本，Spring Boot 3.x 需要 JDK 17 或更高。
+        mybatis-plus.version 显式声明 MyBatis-Plus 版本，方便后续升级。
+    -->
+    <properties>
+        <java.version>17</java.version>
+        <mybatis-plus.version>3.5.11</mybatis-plus.version>
+    </properties>
+
+    <dependencies>
+        <!--
+            Spring Boot Web 起步依赖，包含 Spring MVC、内嵌 Tomcat 等，
+            用于构建 RESTful 应用。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--
+            MySQL 数据库驱动，runtime 表示仅在运行时需要，编译时不需要。
+            使用 mysql-connector-j（新版驱动名），对应 MySQL 8.0+。
+        -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+            MyBatis-Plus 增强工具包，简化 MyBatis 开发。
+            使用 spring-boot3-starter 版本，专为 Spring Boot 3.x 设计。
+            版本 3.5.11 完全兼容 Spring Boot 3.5.12 和 JDK 17/21，
+            并修复了旧版本中 DaoSupport 类缺失的问题。
+        -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <!--
+            MyBatis-Plus 分页插件所需依赖（JSqlParser）。
+            如果项目中需要使用分页功能（如 PaginationInnerInterceptor），
+            则必须显式添加此依赖，否则启动时会报错。
+            如果不需要分页，可删除此依赖，但建议保留以便后续扩展。
+        -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <!--
+            Lombok 简化 POJO 代码，自动生成 getter/setter/构造器等。
+            optional=true 防止该依赖被传递到其他模块。
+        -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--
+            Spring Boot 测试起步依赖，包含 JUnit、Mockito 等测试框架。
+            仅在测试阶段使用。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Maven 构建配置 -->
+    <build>
+        <plugins>
+            <!--
+                Spring Boot Maven 插件，用于打包可执行 jar 包，
+                并支持 spring-boot:run 等便捷命令。
+            -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
